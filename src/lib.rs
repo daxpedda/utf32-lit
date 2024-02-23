@@ -32,7 +32,7 @@ impl VisitMut for Utf32Replace {
             if let Lit::Str(s) = &expr.lit {
                 let string = s.value();
                 let chars = string.chars();
-                *node = parse_quote_spanned!(s.span()=> &[#(#chars),*] as &[char]);
+                *node = parse_quote_spanned!(s.span()=> { let out: &[char] = &[#(#chars),*]; out });
             }
         }
         visit_mut::visit_expr_mut(self, node);
